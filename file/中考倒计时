@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026中考倒计时</title>
+    <style>
+        /* 核心护眼优化：超柔和的背景色 + 低饱和度文字色 */
+        body {
+            background-color: #f0f5f0; /* 极浅的草绿色，比纯白更护眼，缓解视疲劳 */
+            color: #202820; /* 深灰绿色，而非纯黑，降低对比度更护眼 */
+            font-family: "Microsoft YaHei Light", "PingFang SC Light", sans-serif; /* 轻量字体，更柔和 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0 20px; /* 左右留白，避免内容贴边 */
+            overflow: hidden;
+            /* 防蓝光优化：轻微滤镜 */
+            filter: hue-rotate(2deg) brightness(1.02) contrast(0.98);
+        }
+
+        /* 标题样式：轻量字体 + 低饱和度 */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 500; /* 非粗体，更柔和 */
+            text-align: center;
+            letter-spacing: 0.1rem; /* 增加字间距，易读 */
+        }
+
+        /* 倒计时容器 */
+        .countdown-container {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* 卡片护眼优化：柔和背景 + 低饱和度阴影 */
+        .countdown-card {
+            width: 110px;
+            height: 130px;
+            background-color: #ffffff; /* 卡片纯白，与背景形成柔和对比 */
+            border-radius: 15px; /* 更大圆角，更柔和 */
+            /* 低饱和度阴影，不刺眼 */
+            box-shadow: 0 3px 10px rgba(150, 180, 150, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+            border: 1px solid #e8f0e8; /* 浅边框，增强层次感但不刺眼 */
+        }
+
+        /* hover动效也更柔和 */
+        .countdown-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(150, 180, 150, 0.25);
+        }
+
+        /* 数字：稍小字号 + 轻量字体 + 柔和颜色 */
+        .card-number {
+            font-size: 3.5rem;
+            font-weight: 500; /* 轻粗体，避免过粗刺眼 */
+            line-height: 1;
+            margin-bottom: 8px;
+            color: #1a241a; /* 略浅的黑色，降低对比度 */
+        }
+
+        /* 单位：更浅的颜色 + 更大字间距 */
+        .card-unit {
+            font-size: 1.1rem;
+            opacity: 0.75;
+            text-transform: capitalize;
+            letter-spacing: 0.05rem;
+        }
+
+        /* 提示文字：低饱和度 */
+        .tip {
+            font-size: 1.2rem;
+            margin-top: 3rem;
+            opacity: 0.7;
+            text-align: center;
+            letter-spacing: 0.05rem;
+        }
+
+        /* 移动端适配，保持护眼体验 */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            .countdown-card {
+                width: 85px;
+                height: 105px;
+            }
+            .card-number {
+                font-size: 2.8rem;
+            }
+            .card-unit {
+                font-size: 0.95rem;
+            }
+            .countdown-container {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>2026年中考倒计时</h1>
+    
+    <div class="countdown-container">
+        <div class="countdown-card">
+            <div class="card-number" id="days">00</div>
+            <div class="card-unit">天</div>
+        </div>
+        <div class="countdown-card">
+            <div class="card-number" id="hours">00</div>
+            <div class="card-unit">时</div>
+        </div>
+        <div class="countdown-card">
+            <div class="card-number" id="minutes">00</div>
+            <div class="card-unit">分</div>
+        </div>
+        <div class="countdown-card">
+            <div class="card-number" id="seconds">00</div>
+            <div class="card-unit">秒</div>
+        </div>
+    </div>
+
+    <div class="tip">距离2026年6月21日中考还有</div>
+
+    <script>
+        const targetDate = new Date(2026, 5, 21, 0, 0, 0);
+
+        function padZero(num) {
+            return num < 10 ? `0${num}` : num;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = padZero(days);
+                document.getElementById('hours').textContent = padZero(hours);
+                document.getElementById('minutes').textContent = padZero(minutes);
+                document.getElementById('seconds').textContent = padZero(seconds);
+            } else {
+                document.querySelector('.countdown-container').innerHTML = `
+                    <div class="countdown-card" style="width: 260px; background-color: #f8fcf8;">
+                        <div class="card-number" style="font-size: 2.2rem; color: #1a241a;">中考已至！</div>
+                        <div class="card-unit" style="opacity: 0.8;">愿你提笔从容 合笔如愿</div>
+                    </div>
+                `;
+                document.querySelector('.tip').style.display = 'none';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
